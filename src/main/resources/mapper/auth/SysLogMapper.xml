@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imao.auth.mapper.SysLogMapper">
+  <resultMap id="BaseResultMap" type="com.imao.auth.model.SysLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="code_sys" jdbcType="CHAR" property="codeSys" />
+    <result column="iphone" jdbcType="VARCHAR" property="iphone" />
+    <result column="login_IP" jdbcType="CHAR" property="loginIp" />
+    <result column="brower_type" jdbcType="VARCHAR" property="browerType" />
+    <result column="content_change" jdbcType="VARCHAR" property="contentChange" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="sys_role" jdbcType="VARCHAR" property="sysRole" />
+    <result column="permission" jdbcType="INTEGER" property="permission" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="team_id" jdbcType="BIGINT" property="teamId" />
+    <result column="contect" jdbcType="LONGVARCHAR" property="contect" />
+    <result column="module" jdbcType="LONGVARCHAR" property="module" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.imao.auth.model.SysLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_log (user_name, code_sys, iphone, 
+      login_IP, brower_type, content_change, 
+      login_time, sys_role, permission, 
+      status, remark, team_id, 
+      contect, module)
+    values (#{userName,jdbcType=VARCHAR}, #{codeSys,jdbcType=CHAR}, #{iphone,jdbcType=VARCHAR}, 
+      #{loginIp,jdbcType=CHAR}, #{browerType,jdbcType=VARCHAR}, #{contentChange,jdbcType=VARCHAR}, 
+      #{loginTime,jdbcType=TIMESTAMP}, #{sysRole,jdbcType=VARCHAR}, #{permission,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{teamId,jdbcType=BIGINT}, 
+      #{contect,jdbcType=LONGVARCHAR}, #{module,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.imao.auth.model.SysLog">
+    update sys_log
+    set user_name = #{userName,jdbcType=VARCHAR},
+      code_sys = #{codeSys,jdbcType=CHAR},
+      iphone = #{iphone,jdbcType=VARCHAR},
+      login_IP = #{loginIp,jdbcType=CHAR},
+      brower_type = #{browerType,jdbcType=VARCHAR},
+      content_change = #{contentChange,jdbcType=VARCHAR},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      sys_role = #{sysRole,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      team_id = #{teamId,jdbcType=BIGINT},
+      contect = #{contect,jdbcType=LONGVARCHAR},
+      module = #{module,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_name, code_sys, iphone, login_IP, brower_type, content_change, login_time, 
+    sys_role, permission, status, remark, team_id, contect, module
+    from sys_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_name, code_sys, iphone, login_IP, brower_type, content_change, login_time, 
+    sys_role, permission, status, remark, team_id, contect, module
+    from sys_log
+  </select>
+</mapper>

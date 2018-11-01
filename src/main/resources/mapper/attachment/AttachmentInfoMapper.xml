@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imao.attachment.mapper.AttachmentInfoMapper">
+
+	<resultMap id="BaseResultMap" type="com.imao.attachment.model.AttachmentInfo">
+		<!-- WARNING - @mbg.generated -->
+		<id column="attachment_id" jdbcType="BIGINT" property="attachmentId" />
+		<result column="file_name" jdbcType="VARCHAR" property="fileName" />
+		<result column="file_db_name" jdbcType="VARCHAR" property="fileDbName" />
+		<result column="attachment_type" jdbcType="INTEGER" property="attachmentType" />
+		<result column="attachment_ascription" jdbcType="INTEGER" property="attachmentAscription" />
+		<result column="attachment_status" jdbcType="INTEGER" property="attachmentStatus" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
+		<result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+		<result column="create_company_id" jdbcType="VARCHAR" property="createCompanyId" />
+		<result column="create_company_name" jdbcType="VARCHAR" property="createCompanyName" />
+		<result column="relation_id" jdbcType="BIGINT" property="relationId" />
+	</resultMap>
+	
+	<insert id="insertAttachmentInfo" parameterType="com.imao.attachment.model.AttachmentInfo">
+		<selectKey resultType="java.lang.Long" keyProperty="attachmentId"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into common_attachment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="fileName != null">
+				file_name,
+			</if>
+			<if test="fileDbName != null">
+				file_db_name,
+			</if>
+			<if test="attachmentType != null">
+				attachment_type,
+			</if>
+			<if test="attachmentAscription != null">
+				attachment_ascription,
+			</if>
+			<if test="attachmentStatus != null">
+				attachment_status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createCompanyId != null">
+				create_company_id,
+			</if>
+			<if test="createCompanyName != null">
+				create_company_name,
+			</if>
+			<if test="relationId != null">
+				relation_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="fileName != null">
+				#{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="fileDbName != null">
+				#{fileDbName,jdbcType=VARCHAR},
+			</if>
+			<if test="attachmentType != null">
+				#{attachmentType,jdbcType=INTEGER},
+			</if>
+			<if test="attachmentAscription != null">
+				#{attachmentAscription,jdbcType=INTEGER},
+			</if>
+			<if test="attachmentStatus != null">
+				#{attachmentStatus,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createCompanyId != null">
+				#{createCompanyId,jdbcType=VARCHAR},
+			</if>
+			<if test="createCompanyName != null">
+				#{createCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="relationId != null">
+				#{relationId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+
+
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from common_attachment
+    where attachment_id = #{attachmentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.imao.attachment.model.AttachmentInfo">
+    insert into common_attachment (attachment_id, file_name, file_db_name, 
+      attachment_type, attachment_ascription, attachment_status, 
+      create_time, create_user_id, create_user_name, 
+      create_company_id, create_company_name, relation_id
+      )
+    values (#{attachmentId,jdbcType=BIGINT}, #{fileName,jdbcType=VARCHAR}, #{fileDbName,jdbcType=VARCHAR}, 
+      #{attachmentType,jdbcType=INTEGER}, #{attachmentAscription,jdbcType=INTEGER}, #{attachmentStatus,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createCompanyId,jdbcType=VARCHAR}, #{createCompanyName,jdbcType=VARCHAR}, #{relationId,jdbcType=BIGINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.imao.attachment.model.AttachmentInfo">
+    update common_attachment
+    set 
+      <if test="fileName != null">
+			file_name =	#{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="fileDbName != null">
+			file_db_name = 	#{fileDbName,jdbcType=VARCHAR},
+			</if>
+			<if test="attachmentType != null">
+			 attachment_type = 	#{attachmentType,jdbcType=INTEGER},
+			</if>
+			<if test="attachmentAscription != null">
+			attachment_ascription = 	#{attachmentAscription,jdbcType=INTEGER},
+			</if>
+			<if test="attachmentStatus != null">
+			attachment_status = 	#{attachmentStatus,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+			create_time = 	#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+			create_user_id = 	#{createUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserName != null">
+			create_user_name =	#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createCompanyId != null">
+				create_company_id = #{createCompanyId,jdbcType=VARCHAR},
+			</if>
+			<if test="createCompanyName != null">
+			create_company_name =	#{createCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="relationId != null">
+			relation_id = 	#{relationId,jdbcType=INTEGER},
+			</if>
+			
+    where attachment_id = #{attachmentId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select attachment_id, file_name, file_db_name, attachment_type, attachment_ascription, 
+    attachment_status, create_time, create_user_id, create_user_name, create_company_id, 
+    create_company_name, relation_id
+    from common_attachment
+    where attachment_id = #{attachmentId,jdbcType=BIGINT}
+  </select>
+  <select id="selectById" resultMap="BaseResultMap">
+    select attachment_id, file_name, file_db_name, attachment_type, attachment_ascription, 
+    attachment_status, create_time, create_user_id, create_user_name, create_company_id, 
+    create_company_name, relation_id
+    from common_attachment
+    where attachment_id = #{attachmentId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select attachment_id, file_name, file_db_name, attachment_type, attachment_ascription, 
+    attachment_status, create_time, create_user_id, create_user_name, create_company_id, 
+    create_company_name, relation_id
+    from common_attachment
+  </select>
+  
+</mapper>

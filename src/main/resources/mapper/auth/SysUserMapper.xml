@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imao.auth.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.imao.auth.model.SysUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="pass_word" jdbcType="VARCHAR" property="passWord" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.imao.auth.model.SysUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (user_name, pass_word, nick_name, 
+      sex, register_date, status
+      )
+    values (#{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{registerDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.imao.auth.model.SysUser">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      pass_word = #{passWord,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, user_name, pass_word, nick_name, sex, register_date, status
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_name, pass_word, nick_name, sex, register_date, status
+    from user
+  </select>
+  <select id="selectByEntity" resultMap="BaseResultMap">
+    select id, user_name, pass_word, nick_name, sex, register_date, status
+    from user
+    <where>
+    	<if test="id !=null and id !=''">
+    		id = #{id,jdbcType=BIGINT}
+    	</if>
+    	<if test="userName !=null and userName !=''">
+    		and user_name = #{userName,jdbcType=VARCHAR}
+    	</if>
+    	<if test="passWord !=null and passWord !=''">
+    		and pass_word = #{passWord,jdbcType=VARCHAR}
+    	</if>
+    	<if test="nickName !=null and nickName !=''">
+    		and nick_name = #{nickName,jdbcType=VARCHAR}
+    	</if>
+    	<if test="sex !=null and sex !=''">
+    		and  sex = #{sex,jdbcType=INTEGER}
+    	</if>
+    	<if test="registerDate !=null and registerDate !=''">
+    		and register_date = #{registerDate,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="status !=null and status !=''">
+    		and status = #{status,jdbcType=INTEGER}
+    	</if>
+    </where>
+  </select>
+</mapper>

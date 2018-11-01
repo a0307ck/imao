@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <logger name="org.springframework.web" level="INFO" />
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+	<property name="LOG_HOME" value="/data" />
+	<property name="AppName" value="traffic-project" />
+    <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+    
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+    
+    <springProfile name="test, prod">
+        <!-- 注意这里一定要放到springProfile里, 否则在你本机执行的时候还是会去找相应的文件 -->
+        <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        	<!-- 设置按尺寸和时间（同时满足）分割 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!--日志文件输出的文件名-->
+                <FileNamePattern>${LOG_HOME}/logs/${AppName}-log.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+                <!--日志文件最大的大小-->
+                <maxFileSize>50MB</maxFileSize>
+                <!--日志文件保留天数-->
+                <maxHistory>15</maxHistory>
+                <totalSizeCap>30GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="asyncFileAppender" class="ch.qos.logback.classic.AsyncAppender">
+            <discardingThreshold>0</discardingThreshold>
+            <queueSize>500</queueSize>
+            <appender-ref ref="FILE" />
+        </appender>
+    </springProfile>
+    
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="consoleAppender" />
+        </root>
+        <!--myibatis log configure-->
+		<logger name="com" level="DEBUG"/>
+		<logger name="java.sql.Connection" level="DEBUG"/>
+		<logger name="java.sql.Statement" level="DEBUG"/>
+		<logger name="java.sql.PreparedStatement" level="DEBUG"/>
+    </springProfile>
+
+    <springProfile name="test">
+        <root level="INFO">
+            <appender-ref ref="asyncFileAppender" />
+        </root>
+        <!--myibatis log configure-->
+		<logger name="com" level="DEBUG"/>
+		<logger name="java.sql.Connection" level="DEBUG"/>
+		<logger name="java.sql.Statement" level="DEBUG"/>
+		<logger name="java.sql.PreparedStatement" level="DEBUG"/>
+    </springProfile>
+    
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="asyncFileAppender" />
+        </root>
+    </springProfile>
+
+</configuration>
