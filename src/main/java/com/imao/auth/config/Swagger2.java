@@ -32,17 +32,17 @@ public class Swagger2 {
 	 */
 	@Bean
     public Docket sys_api() {
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.howie.controller"))
+        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.imao.auth"))
                 .paths(PathSelectors.any()).build().groupName("权限管理接口文档V1.0").enable(swagger2Enable)
                 .apiInfo(apiInfo("权限管理接口文档V1.0","文档中可以查询及测试接口调用参数和结果","1.0"));
     }
 	
 	/**
-	 * 网约车API文档
+	 * 附件API文档
 	 */
     @Bean
     public Docket netcar_api() {
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.imao"))
+        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.imao.attachment"))
                 .paths(PathSelectors.any()).build().groupName("附件接口文档V1.0").enable(swagger2Enable)
                 .apiInfo(apiInfo("附件API接口文档V1.0","文档中可以查询及测试接口调用参数和结果","1.0"));
     }
