@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imao.attachment.model.AttachmentInfo;
 import com.imao.attachment.service.AttachmentInfoService;
+import com.imao.code.Constants;
 import com.imao.code.PageVo;
 import com.imao.utils.WebResult;
 
@@ -43,7 +45,7 @@ public class AttachmentInfoController {
 	@PostMapping(value = "upload")
 	@RequiresRoles(logical = Logical.OR, value = {"admin"})
 	public WebResult uploadFile(@RequestParam(value = "file", required = true) MultipartFile file,
-			AttachmentInfo attachmentInfo) {
+			AttachmentInfo attachmentInfo,HttpServletRequest request) {
 		log.info("Enter Method of upload attachment .");
 		WebResult rt = new WebResult();
 		try {
@@ -57,7 +59,10 @@ public class AttachmentInfoController {
 			} else {
 				return rt.setSuccess(false).setMsg("上传失败，参数不能为空！");
 			}
-			AttachmentInfo attachment = attachmentInfoService.uploadFile(file, attachmentInfo);
+			
+			String tokenHeader = request.getHeader(Constants.AUTH_TOKEN);
+			if(StringUtils.isBlank(tokenHeader))return rt.setSuccess(false).setMsg("请先登录");
+			AttachmentInfo attachment = attachmentInfoService.uploadFile(file, attachmentInfo,tokenHeader);
 			if (attachment != null) {
 				log.info("The method of update attachment success --> " + attachment.getAttachmentId());
 				return rt.setSuccess(true).setMsg("上传成功").setReturnParm(attachment);
@@ -77,7 +82,7 @@ public class AttachmentInfoController {
 	@PostMapping(value = "uploadMultiFiles")
 	@RequiresRoles(logical = Logical.OR, value = {"admin"})
 	public WebResult uploadMultiFiles(@RequestParam(value = "files", required = true) MultipartFile[] files,
-			AttachmentInfo attachmentInfo) {
+			AttachmentInfo attachmentInfo,HttpServletRequest request) {
 		log.info("Enter Method of upload attachment .");
 		WebResult rt = new WebResult();
 		try {
@@ -91,7 +96,10 @@ public class AttachmentInfoController {
 			} else {
 				return rt.setSuccess(false).setMsg("上传失败，参数不能为空！");
 			}
-			List<AttachmentInfo> attachmentList = attachmentInfoService.uploadMultiFiles(files, attachmentInfo);
+			String token = request.getHeader(Constants.AUTH_TOKEN);
+			if(StringUtils.isBlank(token))return rt.setSuccess(false).setMsg("请先登录");
+			
+			List<AttachmentInfo> attachmentList = attachmentInfoService.uploadMultiFiles(files, attachmentInfo,token);
 			if (attachmentList != null && attachmentList.size()>0) {
 				log.info("The method of update attachment success --> " + attachmentList.size());
 				return rt.setSuccess(true).setMsg("上传成功").setReturnParm(attachmentList);

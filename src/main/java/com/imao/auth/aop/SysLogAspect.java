@@ -77,8 +77,6 @@ public class SysLogAspect {
 	        if(logger.isDebugEnabled()) {
 	            logger.debug("=========>tokenHeader {}", tokenHeader);    
 	        }
-//		SysUser SessionUser = SysPropUtils.getUser();
-		
 		String userName = JWTUtil.getUsername(tokenHeader);
 		SysUser SessionUser = null;
 		

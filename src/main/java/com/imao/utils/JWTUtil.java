@@ -64,7 +64,7 @@ public class JWTUtil {
     /**
      * 获得token中的信息，无需secret解密也能获得
      *
-     * @return token中包含的用户名
+     * @return token中包含的用户登录名（唯一）
      */
     public static String getUsername(String token) {
         try {

@@ -19,6 +19,7 @@ import com.imao.attachment.mapper.AttachmentInfoMapper;
 import com.imao.attachment.model.AttachmentInfo;
 import com.imao.attachment.service.AttachmentInfoService;
 import com.imao.utils.DownloadUtil;
+import com.imao.utils.JWTUtil;
 import com.imao.utils.RandomStringUtils;
 import com.imao.utils.TimeUtils;
 
@@ -33,7 +34,7 @@ public class AttachmentInfoServiceImpl implements AttachmentInfoService {
 	private String legalDocumentUploadPath;
 
 	@Override
-	public AttachmentInfo uploadFile(MultipartFile file,AttachmentInfo attachmentInfo) {
+	public AttachmentInfo uploadFile(MultipartFile file,AttachmentInfo attachmentInfo,String token) {
 		try {
 			// 原文件名
 			String fileName = file.getOriginalFilename();
@@ -49,14 +50,12 @@ public class AttachmentInfoServiceImpl implements AttachmentInfoService {
 			}
 			file.transferTo(targetFile);
 			log.info(" upload attachment success " + legalDocumentUploadPath + File.separator + dbFileName);
-//			SysUser user = SysPropUtils.getUser();
+			String userName = JWTUtil.getUsername(token);
 			AttachmentInfo attachment = new AttachmentInfo();
 			attachment.setAttachmentAscription(attachmentInfo.getAttachmentAscription());
 			attachment.setAttachmentStatus(attachmentInfo.getAttachmentStatus());
 			attachment.setAttachmentType(attachmentInfo.getAttachmentType());
-//			attachment.setCreateUserId(user.getId() + "");
-//			attachment.setCreateUserName(user.getUserName());
-//			attachment.setCreateCompanyId(user.getCompanyId() + "");
+			attachment.setCreateUserName(userName);
 			attachment.setFileName(fileName);
 			attachment.setFileDbName(dbFileName);
 			attachment.setCreateTime(new Date());
@@ -87,11 +86,11 @@ public class AttachmentInfoServiceImpl implements AttachmentInfoService {
 	}
 
 	@Override
-	public List<AttachmentInfo> uploadMultiFiles(MultipartFile[] files, AttachmentInfo attachmentInfo) {
+	public List<AttachmentInfo> uploadMultiFiles(MultipartFile[] files, AttachmentInfo attachmentInfo,String token) {
 		List<AttachmentInfo> attachmentList = new ArrayList<>();
 		if(files!=null&&files.length>0){  
 			for(MultipartFile file : files){  
-				AttachmentInfo attach = uploadFile(file,attachmentInfo);
+				AttachmentInfo attach = uploadFile(file,attachmentInfo,token);
 				if(attach!=null)attachmentList.add(attach);
 			}  
 		} 

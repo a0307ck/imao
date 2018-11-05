@@ -32,7 +32,7 @@ public class AttachmentInfo {
     private Integer attachmentType;
 
     /**
-     * 附件所属模块:1网约车 2出租车 3第三方 4渣土车（必填）
+     * 附件所属模块:（必填）
      */
 	@ApiModelProperty(value = "附件所属模块", name = "attachmentAscription")
     private Integer attachmentAscription;
@@ -145,7 +145,7 @@ public class AttachmentInfo {
     }
 
     /**
-     * 获取附件类型:1隐患,2隐患整改,3隐患整改复查,4乘客投诉，5乘客评价（必填）
+     * 获取附件类型:（必填）
      *
      * @return attachment_type - 附件类型
      */
@@ -154,7 +154,7 @@ public class AttachmentInfo {
     }
 
     /**
-     * 设置附件类型:1隐患,2隐患整改,3隐患整改复查,4乘客投诉，5乘客评价（必填）
+     * 设置附件类型:（必填）
      *
      * @param attachmentType 附件类型
      */
@@ -163,18 +163,18 @@ public class AttachmentInfo {
     }
 
     /**
-     * 获取附件所属模块:1网约车 2出租车 3第三方 4渣土车
+     * 获取附件所属模块:
      *
-     * @return attachment_ascription - 附件所属模块:1网约车 2出租车 3第三方 4渣土车
+     * @return attachment_ascription - 附件所属模块:
      */
     public Integer getAttachmentAscription() {
         return attachmentAscription;
     }
 
     /**
-     * 设置附件所属模块:1网约车 2出租车 3第三方 4渣土车
+     * 设置附件所属模块:
      *
-     * @param attachmentAscription 附件所属模块:1网约车 2出租车 3第三方 4渣土车
+     * @param attachmentAscription 附件所属模块:
      */
     public void setAttachmentAscription(Integer attachmentAscription) {
         this.attachmentAscription = attachmentAscription;

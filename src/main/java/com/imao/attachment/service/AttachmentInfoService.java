@@ -12,9 +12,10 @@ public interface AttachmentInfoService {
 	/**
 	 * 上传文件，返还新增实体数据
 	 * @param file 
+	 * @param token 
 	 * @param legalDocument 
 	 * */
-	AttachmentInfo uploadFile(MultipartFile file, AttachmentInfo attachmentInfo);
+	AttachmentInfo uploadFile(MultipartFile file, AttachmentInfo attachmentInfo, String token);
 
 	/**
 	 * 更新附件关联的实体id
@@ -26,9 +27,10 @@ public interface AttachmentInfoService {
 	/**
 	 * 上传多个文件，返还新增实体数据
 	 * @param files
+	 * @param token 
 	 * @param legalDocument 
 	 * */
-	List<AttachmentInfo> uploadMultiFiles(MultipartFile[] files, AttachmentInfo attachmentInfo);
+	List<AttachmentInfo> uploadMultiFiles(MultipartFile[] files, AttachmentInfo attachmentInfo, String token);
 
 	void genericDownloadFile(AttachmentInfo attachmentInfo, HttpServletResponse response);
 

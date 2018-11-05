@@ -19,14 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import com.imao.auth.filter.JWTFilter;
 import com.imao.auth.shiro.CustomRealm;
 
-/**
- * Created with IntelliJ IDEA
- *
- * @Author yuanhaoyue swithaoy@gmail.com
- * @Description
- * @Date 2018-04-09
- * @Time 16:56
- */
+
 @Configuration
 public class ShiroConfig {
     /**
